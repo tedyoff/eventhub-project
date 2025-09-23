@@ -1,0 +1,43 @@
+body {
+  font-family: Arial, sans-serif;
+}
+
+/* Hero */
+header, #eventBanner {
+  min-height: 60vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+}
+
+/* Cards */
+.card {
+  border-radius: 10px;
+  transition: transform 0.3s ease;
+}
+.card:hover {
+  transform: translateY(-5px);
+}
+
+/* Buttons */
+.btn-primary {
+  background: #007bff;
+  border: none;
+}
+.btn-primary:hover {
+  background: #0056b3;
+}
+
+/* Back to top */
+#backToTop {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  display: none;
+  background: #007bff;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 50%;
+}

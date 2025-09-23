@@ -1,0 +1,10 @@
+@media(max-width: 768px){
+  #featured-events .col-md-4, #eventsContainer .col-md-4 {
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
+
+  .navbar-nav {
+    text-align: center;
+  }
+}

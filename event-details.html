@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EventHub | Event Details</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/responsive.css">
+  <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+</head>
+<body>
+
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
+  <div class="container">
+    <a class="navbar-brand" href="index.html">EventHub</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+        <li class="nav-item"><a class="nav-link" href="events.html">Events</a></li>
+        <li class="nav-item"><a class="nav-link" href="about/about.html">About</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- Event Banner -->
+<section id="eventBanner" class="text-white text-center py-5" style="background: linear-gradient(to right, #007bff, #0056b3);">
+  <div class="container">
+    <h1 id="eventTitle" class="display-4 fw-bold">Event Title</h1>
+    <p id="eventDateLocation" class="lead">Date • Location</p>
+    <p id="eventPrice" class="fw-bold">$0</p>
+  </div>
+</section>
+
+<!-- Event Details -->
+<section class="container my-5">
+  <div class="row">
+    <!-- Event Description -->
+    <div class="col-md-8">
+      <h2>About This Event</h2>
+      <p id="eventDescription">Full description of the event goes here. Include agenda, speakers, highlights, and other details to attract attendees.</p>
+    </div>
+
+    <!-- Booking Form -->
+    <div class="col-md-4">
+      <h3>Book This Event</h3>
+      <form id="bookingForm">
+        <div class="mb-3">
+          <input type="text" class="form-control" name="firstName" placeholder="First Name" required>
+        </div>
+        <div class="mb-3">
+          <input type="text" class="form-control" name="lastName" placeholder="Last Name" required>
+        </div>
+        <div class="mb-3">
+          <input type="email" class="form-control" name="email" placeholder="Email" required>
+        </div>
+        <div class="mb-3">
+          <input type="tel" class="form-control" name="phone" placeholder="Phone Number" pattern="[0-9]{10,15}" title="Enter valid phone number" required>
+        </div>
+        <div class="mb-3">
+          <input type="number" class="form-control" name="tickets" placeholder="Number of Tickets" min="1" required>
+        </div>
+        <div class="mb-3">
+          <select class="form-select" name="country" required>
+            <option value="">Select Country</option>
+            <option value="USA">United States</option>
+            <option value="UK">United Kingdom</option>
+            <option value="Canada">Canada</option>
+            <option value="Germany">Germany</option>
+            <option value="Australia">Australia</option>
+          </select>
+        </div>
+        <div class="mb-3">
+          <select class="form-select" name="paymentMethod" required>
+            <option value="">Select Payment Method</option>
+            <option value="card">Credit/Debit Card</option>
+            <option value="paypal">PayPal</option>
+            <option value="stripe">Stripe</option>
+          </select>
+        </div>
+        <div class="mb-3">
+          <input type="text" class="form-control" name="cardNumber" placeholder="Card Number" pattern="[0-9]{13,16}" title="Enter valid card number" required>
+        </div>
+        <div class="mb-3">
+          <input type="text" class="form-control" name="expiry" placeholder="MM/YY" pattern="(0[1-9]|1[0-2])\/[0-9]{2}" title="Enter valid expiry (MM/YY)" required>
+        </div>
+        <div class="mb-3">
+          <input type="text" class="form-control" name="cvv" placeholder="CVV" pattern="[0-9]{3,4}" title="Enter valid CVV" required>
+        </div>
+
+        <button type="submit" class="btn btn-primary w-100">Submit Booking & Payment</button>
+      </form>
+      <p id="successMsg" class="text-success mt-3" style="display:none;">Booking submitted successfully!</p>
+    </div>
+  </div>
+</section>
+
+<!-- Related Events -->
+<section class="container my-5">
+  <h3>Related Events</h3>
+  <div class="row" id="relatedEvents"></div>
+</section>
+
+<!-- Footer -->
+<footer class="bg-dark text-white text-center py-3">
+  <p>&copy; 2025 EventHub. All Rights Reserved.</p>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+  // Example: dynamically populate event details
+  const urlParams = new URLSearchParams(window.location.search);
+  const eventId = urlParams.get('id');
+
+ // Example events data with online images
+const events = [
+  {
+    id: '1',
+    title: 'Summer Music Festival',
+    date: 'July 15, 2025',
+    location: 'New York, USA',
+    price: 45,
+    description: 'Join top artists for an unforgettable night of live music.',
+    image: 'https://images.unsplash.com/photo-1507874457470-272b3c8d8ee2'
+  },
+  {
+    id: '2',
+    title: 'Global Tech Conference 2025',
+    date: 'August 20, 2025',
+    location: 'San Francisco, USA',
+    price: 120,
+    description: 'Explore innovations and trends in AI, Blockchain, and more.',
+    image: 'https://images.unsplash.com/photo-1518770660439-4636190af475'
+  },
+  {
+    id: '3',
+    title: 'Business Leadership Seminar',
+    date: 'September 5, 2025',
+    location: 'London, UK',
+    price: 90,
+    description: 'Learn leadership strategies from industry leaders worldwide.',
+    image: 'https://images.unsplash.com/photo-1522202176988-66273c2fd55f'
+  },
+  {
+    id: '4',
+    title: 'International Food Carnival',
+    date: 'October 10, 2025',
+    location: 'Paris, France',
+    price: 30,
+    description: 'Taste dishes from over 40 countries in one place.',
+    image: 'https://images.unsplash.com/photo-1504674900247-0877df9cc836'
+  },
+  {
+    id: '5',
+    title: 'Marathon for Charity',
+    date: 'November 2, 2025',
+    location: 'Berlin, Germany',
+    price: 25,
+    description: 'Run for a cause and support global charities.',
+    image: 'https://images.unsplash.com/photo-1508609349937-5ec4ae374ebf'
+  },
+  {
+    id: '6',
+    title: 'Modern Art Exhibition',
+    date: 'December 12, 2025',
+    location: 'Tokyo, Japan',
+    price: 55,
+    description: 'Discover stunning works from contemporary artists worldwide.',
+    image: 'https://images.unsplash.com/photo-1529101091764-c3526daf38fe'
+  },
+  {
+    id: '7',
+    title: 'World Startup Summit',
+    date: 'January 18, 2026',
+    location: 'Dubai, UAE',
+    price: 150,
+    description: 'A gathering of entrepreneurs, investors, and global innovators.',
+    image: 'https://images.unsplash.com/photo-1521791136064-7986c2920216'
+  }
+];
+
+
+  const event = events.find(e => e.id === eventId) || events[0];
+
+  document.getElementById('eventTitle').innerText = event.title;
+  document.getElementById('eventDateLocation').innerText = `${event.date} • ${event.location}`;
+  document.getElementById('eventPrice').innerText = `$${event.price}`;
+  document.getElementById('eventDescription').innerText = event.description;
+  document.getElementById('eventBanner').style.backgroundImage = `url(${event.image})`;
+
+  // Related events (all except current)
+  const relatedContainer = document.getElementById('relatedEvents');
+  events.filter(e => e.id !== event.id).forEach(ev => {
+    relatedContainer.innerHTML += `
+      <div class="col-md-4 mb-4">
+        <div class="card h-100 shadow-sm">
+          <img src="${ev.image}" class="card-img-top" alt="${ev.title}">
+          <div class="card-body">
+            <h5 class="card-title">${ev.title}</h5>
+            <p class="card-text text-muted">${ev.date} • ${ev.location}</p>
+            <a href="event-details.html?id=${ev.id}" class="btn btn-primary w-100">View Details</a>
+          </div>
+        </div>
+      </div>
+    `;
+  });
+
+  // EmailJS Booking Form
+  emailjs.init("hWpbI_oH9gVDwrR-0");
+
+  document.getElementById('bookingForm').addEventListener('submit', function(e){
+    e.preventDefault();
+    const form = this;
+
+    if(!form.checkValidity()){
+      form.reportValidity();
+      return;
+    }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if(!emailRegex.test(form.email.value)){
+      alert('Please enter a valid email.');
+      return;
+    }
+
+    if(form.cardNumber.value.length < 13 || form.cardNumber.value.length > 16 || !/^\d+$/.test(form.cardNumber.value)){
+      alert('Please enter a valid card number.');
+      return;
+    }
+
+    emailjs.sendForm('service_872cqtr','template_2jyor37', form)
+      .then(res=>{
+        document.getElementById('successMsg').style.display = 'block';
+        form.reset();
+      }, err=>{
+        alert('Booking error. Try again.');
+      });
+  });
+</script>
+
+</body>
+</html>
