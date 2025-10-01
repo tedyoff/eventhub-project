@@ -132,7 +132,5 @@ Contact form working
 👤 Author
 
 Tewodros – teddyoff317@gmail.com
----
-
-This format keeps everything **inside one folder**, making it very easy for **testing and deployment**.  
+--- 
 # eventhub-project
